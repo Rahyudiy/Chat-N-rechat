@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat N'rechat</title>
+    <link href="./assets/css/output.css" rel="stylesheet" />
+    <link rel="icon" href="./assets/img/emoji.svg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Arvo:ital@1&family=Bad+Script&family=Cardo:ital@1&family=DM+Sans&family=Figtree&family=Inter:wght@700&family=Italianno&family=Josefin+Sans:wght@500;700&family=Lexend&family=Marck+Script&family=Montserrat&family=Poppins:wght@300&family=Quattrocento&family=Quicksand:wght@400;600&family=Source+Sans+3&family=Stick+No+Bills:wght@800&family=Unna:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Arvo:ital@1&family=Bad+Script&family=Cardo:ital@1&family=DM+Sans&family=Figtree&family=Inter:wght@700&family=Italianno&family=Josefin+Sans:wght@500;700&family=Lexend&family=Marck+Script&family=Montserrat&family=Poppins:wght@300&family=Quattrocento&family=Quicksand:wght@400;600&family=Source+Sans+3&family=Stick+No+Bills:wght@800&family=Unna:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body class="bg-[#F4F7FF] dark:bg-gray-900 dark:text-white duration-500">
+    <!-- navbar -->
+
+    <nav class="dark:bg-gray-900 md:px-20 px-10 pt-10" id="nav">
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 font-sourceSans"
+      >
+        <a
+          href="#"
+          class="block py-2 pl-3 pr-4 bg-transparent text-white rounded md:bg-transparent md:p-0 dark:text-white md:dark:text-blue-500"
+          aria-current="page"
+          ><img src="./assets/img/emoji.svg" alt=""
+        /></a>
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+          <ul
+            class="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+          >
+            <li>
+              <button
+                id="theme-toggle"
+                type="button"
+                class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+              >
+                <svg
+                  id="theme-toggle-dark-icon"
+                  class="hidden w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                  ></path>
+                </svg>
+                <svg
+                  id="theme-toggle-light-icon"
+                  class="hidden w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                aria-current="page"
+                >Beranda</a
+              >
+            </li>
+            <li>
+              <a
+                href="#fitur"
+                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Fitur-fitur</a
+              >
+            </li>
+            <li>
+              <a
+                href="#tech"
+                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >Teknologi</a
+              >
+            </li>
+            <li>
+              <a
+                href="#FAQ"
+                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >FAQ</a
+              >
+            </li>
+            <li>
+              <a
+                href="#download"
+                class="md:px-[25px] px-[10px] rounded-md md:py-[10px] shadow-2xl md:text-white dark:text-white text-gray-900 shadow-blue-500 md:bg-blue-600"
+                ><strong>Download</strong></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="md:px-20 px-10 pt-10">
+      <!-- Body -->
+      <section>
+        <div class="flex flex-col md:flex-row md:py-[75px] justify-center">
+          <div class="">
+            <div class="flex flex-col md:w-[500px] justify-start">
+              <h2 class="text-blue-500 mb-5 font-DMsans">Chat n'rechat</h2>
+              <h1 class="text-[34px] font-DMsans">
+                Sebuah aplikasi chatting yang bisa bikin kamu lupa diri, tapi
+                tidak lupa jasa pahlawan!
+              </h1>
+              <h2 class="text-slate-400 text-lg font-sourceSans">
+                Sebenernya banyak banget aplikasi chatting yang lebih bagus dari
+                ini, maka dari itu lebih baik pake yang lain aja deh ya daripada
+                pake aplikasi yang ini.
+              </h2>
+            </div>
+            <div class="flex flex-row gap-2 md:gap-4 mt-16 font-sourceSans">
+              <button
+                class="md:px-12 px-6 md:py-3 py-2 bg-blue-500 text-white rounded-md shadow-2xl shadow-blue-500"
+              >
+                <strong>Register</strong>
+              </button>
+              <button
+                class="md:px-12 px-6 py-2 md:py-3 text-gray-900 dark:text-black bg-blue-50 rounded-md"
+              >
+                Learn More
+              </button>
+            </div>
+            <div class="flex flex-row mt-10 md:gap-40 gap-5">
+              <div class="flex flex-row">
+                <div class="py-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                  >
+                    <path
+                      d="M21 15.4373V19.4373C21 19.9678 20.7893 20.4765 20.4142 20.8516C20.0391 21.2266 19.5304 21.4373 19 21.4373H5C4.46957 21.4373 3.96086 21.2266 3.58579 20.8516C3.21071 20.4765 3 19.9678 3 19.4373V15.4373"
+                      stroke="#0C1B4D"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M7 10.4373L12 15.4373L17 10.4373"
+                      stroke="#0C1B4D"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12 15.4373V3.43735"
+                      stroke="#0C1B4D"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="text-center">
+                  <p class="text-sm text-slate-400 tracking-widest">
+                    TOTAL DON'TLOUD
+                  </p>
+                  <p class="text-xl"><strong>1,501,234</strong></p>
+                </div>
+              </div>
+              <div class="flex flex-row">
+                <div class="">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                  >
+                    <path
+                      d="M20 21.4373V19.4373C20 18.3765 19.5786 17.3591 18.8284 16.6089C18.0783 15.8588 17.0609 15.4373 16 15.4373H8C6.93913 15.4373 5.92172 15.8588 5.17157 16.6089C4.42143 17.3591 4 18.3765 4 19.4373V21.4373"
+                      stroke="#0C1B4D"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12 11.4373C14.2091 11.4373 16 9.64649 16 7.43735C16 5.22821 14.2091 3.43735 12 3.43735C9.79086 3.43735 8 5.22821 8 7.43735C8 9.64649 9.79086 11.4373 12 11.4373Z"
+                      stroke="#0C1B4D"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="text-center">
+                  <p class="text-sm text-slate-400 tracking-widest">
+                    TOTAL USERS
+                  </p>
+                  <p class="text-xl"><strong>1,318,829</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="md:py-0 py-20">
+            <img
+              class="w-full h-full animate-updown"
+              src="./assets/img/group-1.svg"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- clients -->
+      <section>
+        <div
+          class="flex flex-row flex-wrap rounded-lg gap-10 dark:bg-slate-500 md:p-[60px] p-[30px] justify-center"
+        >
+          <div class="w-fit"><img src="./assets/img/client-1.png" /></div>
+          <div class="w-fit"><img src="./assets/img/client-2.png" /></div>
+          <div class="w-fit"><img src="./assets/img/client-3.png" /></div>
+          <div class="w-fit"><img src="./assets/img/client-4.png" /></div>
+          <div class="w-fit"><img src="./assets/img/client-5.png" /></div>
+        </div>
+      </section>
+
+      <!-- reason -->
+      <section class="py-[100px] dark:text-white" id="fitur">
+        <div class="flex flex-col text-center">
+          <h2
+            class="font-bold dark:text-slate-400 text-[#0C1B4D] font-sourceSans"
+          >
+            NGGAK HARUS SIH SEBENERNYA
+          </h2>
+          <h1
+            class="text-[28px] dark:text-white text-[#0C1B4D] p-5 tracking-wide font-DMsans"
+          >
+            Kenapa Harus Pakai Chat N’ Rechat?
+          </h1>
+          <div class="dark:text-white text-[#0c1b4d92] font-sourceSans">
+            <p>
+              Sebenernya yang bagus itu sih WhatsApp loh, mending pake WhatsApp
+            </p>
+            <p>aja deh. Yaudah berikut ini adalah fitur-fitur WhatsApp</p>
+          </div>
+        </div>
+
+        <div class="mt-20">
+          <div class="flex md:flex-row flex-col gap-24 justify-center">
+            <div class="">
+              <div class="text-center">
+                <div class="flex flex-row justify-center">
+                  <img class="w-[250px]" src="./assets/img/vector-1.svg" />
+                </div>
+                <div class="mt-[12px]">
+                  <h2
+                    class="dark:text-white text-xl text-[#0C1B4D] font-bold py-4 font-DMsans"
+                  >
+                    Groups to keep in touch
+                  </h2>
+                  <p class="text-slate-400 leading-relaxed font-sourceSans">
+                    Keep in touch with the groups of people that matter the
+                    most, like your family or coworkers. With group chats, you
+                    can share messages, photos, and videos.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div class="text-center">
+                <div class="flex flex-row justify-center">
+                  <img class="w-[250px]" src="./assets/img/vector-2.svg" />
+                </div>
+                <div class="mt-[65px]">
+                  <h2
+                    class="text-xl dark:text-white text-[#0C1B4D] font-bold py-4 font-DMsans"
+                  >
+                    Simple, Reliable Messaging
+                  </h2>
+                  <p class="text-slate-400 leading-relaxed font-sourceSans">
+                    Message your friends and family for free*. WhatsApp uses
+                    your phone's Internet connection to send messages so you can
+                    avoid SMS fees.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div class="text-center">
+                <div class="flex flex-row justify-center">
+                  <img class="w-[250px]" src="./assets/img/vector-3.svg" />
+                </div>
+                <div class="mt-[12px]">
+                  <h2
+                    class="text-xl dark:text-white text-[#0C1B4D] font-bold py-4 font-DMsans"
+                  >
+                    Speak Freely
+                  </h2>
+                  <p class="text-slate-400 leading-relaxed font-sourceSans">
+                    With voice calls, you can talk to your friends and family
+                    for free*, even if they're in another country. And with
+                    free* video calls, you can have face-to-face conversations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- technology -->
+      <section id="tech">
+        <div class="flex md:flex-row flex-col justify-center">
+          <div class="">
+            <img class="animate-updown" src="./assets/img/group-2.svg" />
+          </div>
+          <div class="md:w-[50%] w-full my-10">
+            <div class="flex flex-col">
+              <h2
+                class="tracking-widest font-semibold dark:text-white text-[#0C1B4D] font-sourceSans"
+              >
+                TEKNOLOGI YANG DIGUNAKAN
+              </h2>
+              <h1
+                class="dark:text-white text-[#0C1B4D] text-3xl leading-relaxed font-DMsans"
+              >
+                Teknologi Yang Kami Gunakan Di Dalam Aplikasi Ini Akan Membuat
+                DHH Dan Jason Fried Pensiun! 😱
+              </h1>
+              <p class="text-slate-400 font-sourceSans">
+                Lo bisa bayangin DHH sama Jason Fried aja jadi pensiun gegara
+                aplikasi ini, apalagi lo yang cuma user dan beban kami, gegara
+                lo pake dan daftar di aplikasi ini jadi kita harus bayar server
+                DO tiap bulan, mana pas bayar harus tunjuk-tunjukan. Inilah
+                alasan kenapa gak usah daftar:
+              </p>
+              <div class="mt-10">
+                <div class="flex flex-row gap-10">
+                  <img src="./assets/img/emoji-2.svg" />
+                  <div class="pt-5">
+                    <h2 class="text-xl font-medium font-DMsans">
+                      Kamu Adalah Beban Kami
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed font-sourceSans">
+                      Semakin banyak kamu yang mendaftar di aplikasi ini,
+                      artinya semakin banyak data yang perlu disimpan, nah kan
+                      jadi perlu server gede tuh. Makanya kamu beban!
+                    </p>
+                  </div>
+                </div>
+                <div class="flex flex-row gap-10">
+                  <img src="./assets/img/emoji-3.svg" />
+                  <div class="pt-5">
+                    <h2 class="text-xl font-medium font-DMsans">
+                      Males Buat Ngembangin
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed font-sourceSans">
+                      Lo bakal nemu bug, entah pesan yang mau dikirim gak bisa
+                      dikirim padahal lo belom pencet tombol enter atau masalah
+                      lainnya. Nah soal itu kita males buat benerin.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex flex-row gap-10">
+                  <img src="./assets/img/emoji-4.svg" />
+                  <div class="pt-5">
+                    <h2 class="text-xl font-medium font-DMsans">
+                      Pokoknya Males Aja Lah
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed font-sourceSans">
+                      Nggak tau lagi harus ngomong apa, pokoknya males aja sih
+                      kita bikin aplikasi chat kek gini. Makannya mending lo
+                      pake WhatsApp aja udah.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- download app -->
+      <section id="download">
+        <div
+          class="flex md:flex-row flex-col bg-[#4A72FF] rounded-2xl shadow-2xl shadow-blue-500 justify-center"
+        >
+          <div class="flex flex-row md:px-[80px] px-[40px] py-[100px]">
+            <div class="flex flex-col">
+              <p class="text-white pb-4 font-sourceSans">
+                DOWNLOAD APLIKASINYA
+              </p>
+              <h1
+                class="md:text-3xl text-[20px] text-white pb-8 leading-relaxed font-DMsans"
+              >
+                Download Aplikasi Chat n’ Rechat Di Play Store, App Store, atau
+                Symbian Store
+              </h1>
+              <ul
+                class="text-[#FFFFFF99] list-disc list-inside font-sourceSans"
+              >
+                <li>Android Version: Mojave+</li>
+                <li>iOS Version: Lolipop+</li>
+                <li>Symbian: 20.04+</li>
+              </ul>
+              <div class="flex flex-row mt-[40px]">
+                <a href="/"><img src="./assets/img/group-3.svg" /></a>
+                <a href="/"><img src="./assets/img/group-4.svg" /></a>
+              </div>
+            </div>
+          </div>
+          <div class="pr-[80px] md:w-full w-0 h-full">
+            <img class="w-full h-full" src="./assets/img/group-5.svg" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!-- question -->
+      <section id="FAQ">
+        <div class="flex flex-col text-center py-[100px]">
+          <p
+            class="dark:text-white text-[#0C1B4D] leading-relaxed font-medium font-sourceSans"
+          >
+            BANYAK YANG NANYA
+          </p>
+          <h1 class="text-2xl p-4 font-medium font-DMsans">
+            Pertanyaan Yang Sering Ditanyain
+          </h1>
+          <p
+            class="dark:text-white text-slate-400 leading-relaxed font-sourceSans"
+          >
+            Sebenernya pertanyaan-pertanyaan ini kagak ada yang nanya sih,
+          </p>
+          <p
+            class="dark:text-white text-slate-400 leading-relaxed font-sourceSans"
+          >
+            tapi ya ditaruh sini aja siapa tau lo mau baca ‘kan.
+          </p>
+        </div>
+
+        <div class="md:px-[80px] px-0 flex flex-col justify-center font-DMsans">
+          <div class="grid grid-cols-2 px-[30px] py-[20px] border-b-2">
+            <p>Apakah aplikasi ini sudah dapat izin dari MUI?</p>
+            <svg
+              class="justify-self-end"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#0C1B4D"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div
+            class="shadow-xl shadow-blue-500 grid grid-cols-2 rounded-t-lg bg-blue-500 text-white px-[30px] py-[20px] border-b-[1px] border-blue-400"
+          >
+            <p>Apakah aplikasi ini gratis?</p>
+            <svg
+              class="justify-self-end"
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              fill="none"
+            >
+              <path
+                d="M6.96875 15L12.9688 9L18.9688 15"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div
+            class="shadow-lg shadow-blue-500 bg-blue-500 rounded-b-lg text-white px-[30px] py-[20px] font-sans"
+          >
+            <p class="tracking-wider">
+              Ya gratis dong, masa aplikasi chat aja berbayar sih. Lo kalo nanya
+              yang bener dong.
+            </p>
+            <p>
+              Bayangin aja kalo aplikasi ini berbayar, masa pas chat lo harus
+              bayar setiap karakter. Kalo lo
+            </p>
+            <p>mau bayar mending pake MMS aja dah.</p>
+          </div>
+          <div class="grid grid-cols-2 px-[30px] py-[20px] border-b-2">
+            <p>Apakah data saya akan dijual ke agen khusus US?</p>
+            <svg
+              class="justify-self-end"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#0C1B4D"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="grid grid-cols-2 px-[30px] py-[20px] border-b-2">
+            <p>Kenapa bumi muter? Apa karena di depan ada yang nikah?</p>
+            <svg
+              class="justify-self-end"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#0C1B4D"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="grid grid-cols-2 px-[30px] py-[20px] border-b-2">
+            <p>
+              Gimana caranya supaya si Rizal mau bikin konten buat Array ID?
+            </p>
+            <svg
+              class="justify-self-end"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#0C1B4D"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="grid grid-cols-2 px-[30px] py-[20px] border-b-2">
+            <p>Pertanyaan di atas gabakal ada yang bisa jawab sih</p>
+            <svg
+              class="justify-self-end"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#0C1B4D"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="grid grid-cols-2 px-[30px] py-[20px] border-b-2">
+            <p>Kenapa game epep burik, bang?</p>
+            <svg
+              class="justify-self-end"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#0C1B4D"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- footer -->
+      <section class="flex flex-col justify-center">
+        <div class="grid md:grid-cols-3 grid-cols- md:p-[80px] p-[20px]">
+          <div class="md:justify-self-start justify-self-center">
+            <div class="">
+              <div class="flex flex-row">
+                <img src="./assets/img/emoji.svg" />
+                <h1 class="text-xl font-semibold leading-relaxed font-DMsans">
+                  Chat N’ Rechat
+                </h1>
+              </div>
+              <div class="my-3">
+                <p class="text-slate-400 leading-relaxed font-sans">
+                  Sebenernya banyak banget aplikasi chatting yang lebih bagus
+                  dari ini, maka dari itu lebih baik pake yang lain aja deh ya
+                  daripada pake aplikasi yang ini.
+                </p>
+              </div>
+              <p
+                class="text-slate-400 leading-relaxed font-medium tracking-wider font-sans"
+              >
+                COPYRIGHT (C) 2021. DESIGN BY NAUVAL
+              </p>
+              <a
+                href="https://www.linkedin.com/in/ngurah-yudiantara/"
+                class="text-slate-400 hover:underline leading-relaxed font-medium tracking-wider font-sans"
+              >
+                Code By Rahyudi
+              </a>
+            </div>
+          </div>
+          <div class="md:justify-self-center md:my-0 my-8 md:mx-0">
+            <div class="">
+              <h1 class="font-semibold text-xl leading-relaxed font-DMsans">
+                SITEMAP
+              </h1>
+              <ul class="font-medium font-sans">
+                <li class="pt-2 text-slate-400">Beranda</li>
+                <li class="pt-2 text-slate-400">Fitur-fitur</li>
+                <li class="pt-2 text-slate-400">Teknologi</li>
+                <li class="pt-2 text-slate-400">FAQ</li>
+                <li class="pt-2 text-slate-400">Download</li>
+              </ul>
+            </div>
+          </div>
+          <div class="md:justify-self-end">
+            <div class="">
+              <h1 class="font-semibold text-xl leading-relaxed font-DMsans">
+                Tetep Terhubung
+              </h1>
+              <div class="my-3 leading-relaxed text-slate-400 font-sans">
+                <p>Lihat kami pansos di sosial</p>
+                <p>media berikut</p>
+              </div>
+              <div class="flex flex-row gap-2 justify-self-center">
+                <img
+                  class="dark:bg-white"
+                  src="./assets/img/social-1.svg"
+                  alt=""
+                />
+                <img
+                  class="dark:bg-white"
+                  src="./assets/img/social-2.svg"
+                  alt=""
+                />
+                <img
+                  class="dark:bg-white"
+                  src="./assets/img/social-3.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script src="./assets/js/app.js"></script>
+      <script src="node_modules/flowbite/dist/flowbite.min.js"></script>
+    </div>
+  </body>
+</html>
